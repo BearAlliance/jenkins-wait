@@ -1,4 +1,4 @@
-# Jenkins-trigger
+# Jenkins-wait
 
 [![Build Status](https://travis-ci.org/BearAlliance/jenkins-wait.svg?branch=master)](https://travis-ci.org/BearAlliance/jenkins-wait)
 
@@ -14,20 +14,20 @@ Sometimes you can't control your corporate jenkins configuration, and have no ch
 This library is made for that situation.
 
 It can be installed globally and invoked from the command line, or imported and used as a part of another script.
-`jenkins-trigger` will trigger a job based on the configuration you specify on the command line, and wait for that job to start, and finish, exiting with or returning the status of the triggered job
+`jenkins-wait` will trigger a job based on the configuration you specify on the command line, and wait for that job to start, and finish, exiting with or returning the status of the triggered job
 
 ## Installation
 
 use in your project
 
 ```bash
-npm install --save-dev jenkins-trigger
+npm install --save-dev jenkins-wait
 ```
 
 or globally
 
 ```bash
-npm install --global jenkins-trigger
+npm install --global jenkins-wait
 ```
 
 # Options
@@ -47,13 +47,13 @@ npm install --global jenkins-trigger
 # Command-line
 
 ```bash
-jenkins-trigger [options]
+jenkins-wait [options]
 ```
 
 or use with `npx`
 
 ```bash
-npx jenkins trigger [options]
+npx jenkins-wait [options]
 ```
 
 It will exit with `0` when the triggered job returns a status of `SUCCESS` and a `1` for all other statuses.
@@ -67,7 +67,7 @@ The library exposes the `JenkinsTrigger` class
 Without parameters
 
 ```javascript
-const JenkinsTrigger = require('jenkins-trigger');
+const JenkinsTrigger = require('jenkins-wait');
 
 const jenkinsJob = new JenkinsTrigger({
   baseJenkins: 'ci.mycompany.com',
@@ -92,7 +92,7 @@ jenkinsJob
 With parameters
 
 ```javascript
-const JenkinsTrigger = require('jenkins-trigger');
+const { JenkinsTrigger } = require('jenkins-wait');
 
 const jenkinsJob = new JenkinsTrigger({
   baseJenkins: 'ci.mycompany.com',

@@ -26,7 +26,7 @@ const argv = require('yargs')
   .demandOption(['base-jenkins', 'job-location'])
   .help('h')
   .alias('h', 'help')
-  .epilog('jenkins-trigger - A patient script for automating your automation')
+  .epilog('jenkins-wait - A patient script for automating your automation')
   .argv;
 
 const {

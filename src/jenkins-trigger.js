@@ -59,7 +59,10 @@ export class JenkinsTrigger {
       }
     );
 
-    return tasks.run({ buildParameters });
+    return tasks.run({ buildParameters }).catch(e => {
+      // console.log(e);
+      return e;
+    });
   }
 
   getLogLevel(silent, verbose) {

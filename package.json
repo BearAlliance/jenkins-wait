@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "description": "A patient library for automating your automation",
   "bin": {
-    "jenkins-trigger": "/dist/bin/run"
+    "jenkins-wait": "lib/bin/run.js"
   },
-  "main": "/dist/jenkins-trigger.js",
+  "main": "lib/jenkins-trigger.js",
   "scripts": {
     "test": "jest",
     "lint": "prettier --check '**/*.+(js|md|json)'",
@@ -17,7 +17,7 @@
     "type": "git"
   },
   "files": [
-    "/bin"
+    "lib/"
   ],
   "author": {
     "name": "Nick Cacace",
