@@ -1,0 +1,64 @@
+{
+  "name": "jenkins-wait",
+  "version": "0.0.0",
+  "description": "A patient library for automating your automation",
+  "bin": {
+    "jenkins-trigger": "/dist/bin/run"
+  },
+  "main": "/dist/jenkins-trigger.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "prettier --check '**/*.+(js|md|json)'",
+    "prettier-fix": "prettier --write '**/*.+(js|md|json)'",
+    "build": "rimraf lib && babel src --out-dir lib --ignore '**/*.spec.js'",
+    "build:watch": "nodemon --exec 'npm run build' --watch src"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "files": [
+    "/bin"
+  ],
+  "author": {
+    "name": "Nick Cacace",
+    "email": "NickCacace@gmail.com"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "core-js": "^3.1.4",
+    "listr": "^0.14.3",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "yargs": "^13.2.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "@types/jest": "^24.0.15",
+    "@types/listr": "^0.14.0",
+    "@types/nock": "^10.0.3",
+    "@types/request-promise": "^4.1.44",
+    "babel-jest": "^24.8.0",
+    "husky": "^2.4.1",
+    "jest": "^24.8.0",
+    "nock": "^10.0.6",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "regenerator-runtime": "^0.13.2",
+    "rimraf": "^2.6.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    }
+  }
+}
