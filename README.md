@@ -1,6 +1,7 @@
-# Jenkins-wait
+# jenkins-wait
 
 [![Build Status](https://travis-ci.org/BearAlliance/jenkins-wait.svg?branch=master)](https://travis-ci.org/BearAlliance/jenkins-wait)
+[![npm version](https://badge.fury.io/js/jenkins-wait.svg)](https://badge.fury.io/js/jenkins-wait)
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
@@ -14,7 +15,7 @@ Sometimes you can't control your corporate jenkins configuration, and have no ch
 This library is made for that situation.
 
 It can be installed globally and invoked from the command line, or imported and used as a part of another script.
-`jenkins-wait` will trigger a job based on the configuration you specify on the command line, and wait for that job to start, and finish, exiting with or returning the status of the triggered job
+`jenkins-wait` will trigger a job, and wait for it to start, and finish, exiting with or returning the status of the triggered job.
 
 ## Installation
 
