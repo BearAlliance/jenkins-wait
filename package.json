@@ -7,17 +7,11 @@
     "trigger",
     "wait"
   ],
-  "bin": {
-    "jenkins-wait": "lib/bin/run.js"
+  "author": {
+    "name": "Nick Cacace",
+    "email": "NickCacace@gmail.com"
   },
-  "main": "lib/jenkins-trigger.js",
-  "scripts": {
-    "test": "jest",
-    "lint": "prettier --check '**/*.+(js|md|json)'",
-    "prettier-fix": "prettier --write '**/*.+(js|md|json)'",
-    "build": "rimraf lib && babel src --out-dir lib --ignore '**/*.spec.js'",
-    "build:watch": "nodemon --exec 'npm run build' --watch src"
-  },
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/BearAlliance/jenkins-wait.git"
@@ -25,14 +19,21 @@
   "bugs": {
     "url": "https://github.com/BearAlliance/jenkins-wait/issues"
   },
+  "bin": {
+    "jenkins-wait": "lib/bin/run.js"
+  },
+  "main": "lib/jenkins-trigger.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "npm run prettier-check",
+    "prettier-check": "prettier --check --ignore-path .gitignore '**/*.+(js|md|json)'",
+    "prettier-fix": "prettier --write --ignore-path .gitignore '**/*.+(js|md|json)'",
+    "build": "rimraf lib && babel src --out-dir lib --ignore '**/*.spec.js'",
+    "build:watch": "nodemon --exec 'npm run build' --watch src"
+  },
   "files": [
     "lib/"
   ],
-  "author": {
-    "name": "Nick Cacace",
-    "email": "NickCacace@gmail.com"
-  },
-  "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "core-js": "^3.1.4",
