@@ -9,7 +9,7 @@ export class JenkinsTrigger {
     jobLocation,
     username,
     password,
-    pollInterval = 1000,
+    pollInterval,
     useHttps = true
   }) {
     this.pollInterval = pollInterval;
