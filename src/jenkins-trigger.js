@@ -30,7 +30,6 @@ export class JenkinsTrigger {
       [
         {
           title: 'Finding the project',
-          exitOnError: true,
           task: (ctx, task) => this.ensureProjectExists(ctx, task)
         },
         {
@@ -78,7 +77,7 @@ export class JenkinsTrigger {
   ensureProjectExists(ctx, task) {
     return this.jenkinsJob.doesProjectExist().then(projectExists => {
       if (!projectExists) {
-        throw new Error(`Cannot find project`);
+        return Promise.reject(new Error(`Cannot find project`));
       }
       task.title = 'Project found';
     });
@@ -92,8 +91,10 @@ export class JenkinsTrigger {
         task.title = `Next build number will be ${nextBuildNumber}`;
       })
       .catch(e => {
-        throw new Error(
-          `Error getting build number: ${e.statusCode || ''} ${e.message}`
+        return Promise.reject(
+          new Error(
+            `Error getting build number: ${e.statusCode || ''} ${e.message}`
+          )
         );
       });
   }
@@ -105,8 +106,10 @@ export class JenkinsTrigger {
         task.title = 'Job added to the queue';
       })
       .catch(e => {
-        throw new Error(
-          `Error triggering the job: ${e.statusCode || ''} ${e.message}`
+        return Promise.reject(
+          new Error(
+            `Error triggering the job: ${e.statusCode || ''} ${e.message}`
+          )
         );
       });
   }
@@ -121,10 +124,12 @@ export class JenkinsTrigger {
         task.title = 'Build started';
       })
       .catch(e => {
-        throw new Error(
-          `Error waiting for the build to start: ${e.statusCode || ''} ${
-            e.message
-          }`
+        return Promise.reject(
+          new Error(
+            `Error waiting for the build to start: ${e.statusCode || ''} ${
+              e.message
+            }`
+          )
         );
       })
       .finally(() => {
@@ -143,12 +148,14 @@ export class JenkinsTrigger {
         ctx.exitCode = exitCode;
         task.title = `Build ${status}`;
         if (exitCode !== 0) {
-          throw new Error('Build not successful');
+          return Promise.reject(new Error('Build not successful'));
         }
       })
       .catch(e => {
-        throw new Error(
-          `Error getting build status: ${e.statusCode || ''} ${e.message}`
+        return Promise.reject(
+          new Error(
+            `Error getting build status: ${e.statusCode || ''} ${e.message}`
+          )
         );
       })
       .finally(() => {

@@ -23,14 +23,14 @@ describe('JenkinsTrigger', () => {
 
   describe('steps', () => {
     describe('ensureProjectExists', () => {
-      it('should throw if the project does not exist', async () => {
+      it('should reject if the project does not exist', async () => {
         instance.jenkinsJob.doesProjectExist = jest
           .fn()
           .mockImplementation(() => Promise.resolve(false));
 
-        expect(async () => {
-          await instance.ensureProjectExists(ctx, task).toThrow();
-        });
+        return expect(
+          instance.ensureProjectExists(ctx, task)
+        ).rejects.toBeInstanceOf(Error);
       });
       it('should change the title when the project is found', done => {
         instance.jenkinsJob.doesProjectExist = jest
@@ -45,14 +45,14 @@ describe('JenkinsTrigger', () => {
     });
 
     describe('nextBuildNumber', () => {
-      it('should throw if there is an error', () => {
+      it('should reject if there is an error', () => {
         instance.jenkinsJob.getNextBuildNumber = jest
           .fn()
           .mockImplementation(() => Promise.reject('idk'));
 
-        expect(async () => {
-          await instance.nextBuildNumber(ctx, task).toThrow();
-        });
+        return expect(
+          instance.nextBuildNumber(ctx, task)
+        ).rejects.toBeInstanceOf(Error);
       });
       it('should change the title and context to the next build number', () => {
         instance.jenkinsJob.getNextBuildNumber = jest
@@ -73,14 +73,14 @@ describe('JenkinsTrigger', () => {
 
     describe('triggerJob', () => {
       describe('error', () => {
-        it('should throw', () => {
+        it('should reject', () => {
           instance.jenkinsJob.build = jest
             .fn()
             .mockImplementation(() => Promise.reject('idk'));
 
-          expect(async (ctx, task) => {
-            await instance.triggerJob(ctx, task).toThrow();
-          });
+          return expect(instance.triggerJob(ctx, task)).rejects.toBeInstanceOf(
+            Error
+          );
         });
       });
       describe('success', () => {
@@ -99,14 +99,14 @@ describe('JenkinsTrigger', () => {
 
     describe('getBuildUrl', () => {
       describe('error', () => {
-        it('should throw', () => {
+        it('should reject', () => {
           instance.jenkinsJob.waitForBuildToStart = jest
             .fn()
             .mockImplementation(() => Promise.reject());
 
-          expect(async () => {
-            await instance.getBuildUrl(ctx, task).toThrow();
-          });
+          return expect(instance.getBuildUrl(ctx, task)).rejects.toBeInstanceOf(
+            Error
+          );
         });
       });
       describe('success', () => {
@@ -136,25 +136,25 @@ describe('JenkinsTrigger', () => {
 
     describe('getBuildStatus', () => {
       describe('error', () => {
-        it('should throw', () => {
+        it('should reject', () => {
           instance.jenkinsJob.waitForStatus = jest
             .fn()
             .mockImplementation(() => Promise.reject());
 
-          expect(async () => {
-            await instance.getBuildStatus(ctx, task).toThrow();
-          });
+          return expect(
+            instance.getBuildStatus(ctx, task)
+          ).rejects.toBeInstanceOf(Error);
         });
       });
       describe('non-successful status', () => {
-        it('should throw', () => {
+        it('should reject', () => {
           instance.jenkinsJob.waitForStatus = jest
             .fn()
             .mockImplementation(() => Promise.resolve('FAILURE'));
 
-          expect(async () => {
-            await instance.getBuildStatus(ctx, task).toThrow();
-          });
+          return expect(
+            instance.getBuildStatus(ctx, task)
+          ).rejects.toBeInstanceOf(Error);
         });
       });
       describe('success', () => {

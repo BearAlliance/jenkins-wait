@@ -52,7 +52,6 @@ const buildParameters = parseColonSeparatedParams(argv.parameters);
 trigger
   .runJob(buildParameters)
   .then(result => {
-    console.log(`Job finished with result ${result.buildStatus}`);
     process.exit(result.exitCode);
   })
   .catch(e => {
