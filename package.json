@@ -2,6 +2,11 @@
   "name": "jenkins-wait",
   "version": "0.0.0",
   "description": "A patient library for automating your automation",
+  "keywords": [
+    "jenkins",
+    "trigger",
+    "wait"
+  ],
   "bin": {
     "jenkins-wait": "lib/bin/run.js"
   },
@@ -16,6 +21,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/BearAlliance/jenkins-wait.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BearAlliance/jenkins-wait/issues"
   },
   "files": [
     "lib/"
