@@ -13,21 +13,49 @@ const argv = require('yargs')
   .example(
     '$0 --base-jenkins ci.myCompany.com --job-location /job/otherproject --use-https'
   )
-  .alias('b', 'base-jenkins')
-  .alias('j', 'job-location')
-  .alias('u', 'username')
-  .alias('p', 'password')
-  .alias('i', 'poll-interval')
-  .alias('h', 'use-https')
-  .alias('r', 'parameters')
-  .alias('s', 'silent')
-  .alias('v', 'verbose')
-  .array('parameters')
-  .demandOption(['base-jenkins', 'job-location'])
-  .help('h')
+  .example(
+    '$0 --base-jenkins ci.myCompany.com --job-location /job/otherproject -r thingOne:valueOne -r thingTwo:valueTwo'
+  )
+  .options({
+    'base-jenkins': {
+      alias: 'b',
+      type: 'string',
+      description: 'Base jenkins domain, without protocol',
+      demandOption: true
+    },
+    'job-location': {
+      alias: 'j',
+      type: 'string',
+      description: 'url or jenkins path of the job',
+      demandOption: true
+    },
+    username: { alias: 'u', type: 'string' },
+    password: { alias: 'p', type: 'string' },
+    'poll-interval': {
+      alias: 'i',
+      type: 'number',
+      description: 'Frequency of status fetch'
+    },
+    'use-https': { type: 'boolean', default: true },
+    parameters: {
+      alias: 'r',
+      type: 'array',
+      description: 'Colon separated key:value parameter list'
+    },
+    silent: {
+      alias: 's',
+      type: 'boolean',
+      description: 'No console output, just exit with the status of the job'
+    },
+    verbose: {
+      alias: 'v',
+      description: 'Print debug information',
+      normalize: true
+    }
+  })
   .alias('h', 'help')
   .epilog('jenkins-wait - A patient script for automating your automation')
-  .argv;
+  .help().argv;
 
 const {
   username,
