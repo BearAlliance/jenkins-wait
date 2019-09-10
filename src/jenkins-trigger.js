@@ -77,7 +77,9 @@ export class JenkinsTrigger {
   ensureProjectExists(ctx, task) {
     return this.jenkinsJob.doesProjectExist().then(projectExists => {
       if (!projectExists) {
-        return Promise.reject(new Error(`Cannot find project`));
+        return Promise.reject(
+          new Error(`Cannot find project, or unable to authenticate`)
+        );
       }
       task.title = 'Project found';
     });
