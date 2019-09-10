@@ -35,31 +35,31 @@
     "lib/"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "core-js": "^3.1.4",
+    "@babel/polyfill": "^7.6.0",
+    "core-js": "^3.2.1",
     "listr": "^0.14.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "yargs": "^13.2.4"
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4",
-    "@types/jest": "^24.0.15",
-    "@types/listr": "^0.14.0",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "@types/jest": "^24.0.18",
+    "@types/listr": "^0.14.2",
     "@types/nock": "^10.0.3",
     "@types/request-promise": "^4.1.44",
-    "babel-jest": "^24.8.0",
-    "husky": "^2.4.1",
-    "jest": "^24.8.0",
-    "nock": "^10.0.6",
-    "nodemon": "^1.19.1",
+    "babel-jest": "^24.9.0",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "nock": "^11.3.3",
+    "nodemon": "^1.19.2",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
-    "regenerator-runtime": "^0.13.2",
-    "rimraf": "^2.6.3"
+    "regenerator-runtime": "^0.13.3",
+    "rimraf": "^3.0.0"
   },
   "husky": {
     "hooks": {
