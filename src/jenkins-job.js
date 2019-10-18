@@ -81,13 +81,16 @@ export class JenkinsJob {
               }
             })
             .then(res => {
-              // Build has actually started when it has a duration
               const data = JSON.parse(res);
-              return data.duration > 0
-                ? build.url
-                : delay(pollInterval).then(() =>
-                    this.waitForBuildToStart(buildNumber)
-                  );
+              return build.url;
+
+              // Bug in jenkins? Newer versions aren't giving duration until job completion
+              // Build has actually started when it has a duration
+              // return data.duration > 0
+              //   ? build.url
+              //   : delay(pollInterval).then(() =>
+              //       this.waitForBuildToStart(buildNumber)
+              //     );
             });
         } else {
           return delay(pollInterval).then(() =>
