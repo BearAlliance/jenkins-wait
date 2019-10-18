@@ -163,7 +163,7 @@ describe('JenkinsTrigger', () => {
         it('should update the task title', () => {
           instance.jenkinsJob.waitForStatus = jest
             .fn()
-            .mockImplementation(() => Promise.resolve('SUCCESS'));
+            .mockImplementation(() => Promise.resolve({ result: 'SUCCESS' }));
 
           return instance.getBuildStatus(ctx, task).then(() => {
             expect(task.title).toEqual('Build SUCCESS');

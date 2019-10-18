@@ -163,10 +163,23 @@ export class JenkinsJob {
         const data = JSON.parse(res);
         const result = data.result;
         if (result !== null) {
-          return result;
+          return this.getConsoleText(jobUrl).then(consoleText => ({
+            result,
+            consoleText
+          }));
         } else {
           return delay(pollInterval).then(() => this.waitForStatus(jobUrl));
         }
       });
+  }
+
+  getConsoleText(jobUrl) {
+    return request.get(`${jobUrl}consoleText`, {
+      auth: {
+        user: this.username,
+        pass: this.password
+      }
+    });
+    // Don't parse, result is plaintext
   }
 }

@@ -43,6 +43,7 @@ npm install --global jenkins-wait
 | `use-https`     | no       | `true`      | use https protocol in making jenkins requests               |
 | `silent`        | no       | `false`     | suppress console output                                     |
 | `verbose`       | no       | `false`     | verbosely log all output, takes precedence over `silent`    |
+| `print-console` | no       | `false`     | Print console output of the job after it completes          |
 | `parameters`    | no       | `undefined` | colon-separated parameters to use for a parameterized build |
 
 # Command-line
