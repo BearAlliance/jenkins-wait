@@ -90,7 +90,9 @@ describe('JenkinsTrigger', () => {
             .mockImplementation(() => Promise.resolve());
 
           instance.triggerJob(ctx, task).then(() => {
-            expect(task.title).toEqual('Job added to the queue');
+            expect(
+              task.title.startsWith('Job added to the queue')
+            ).toBeTruthy();
             done();
           });
         });

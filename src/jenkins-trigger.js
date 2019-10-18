@@ -104,8 +104,8 @@ export class JenkinsTrigger {
   triggerJob(ctx, task) {
     return this.jenkinsJob
       .build(ctx.buildParameters)
-      .then(() => {
-        task.title = 'Job added to the queue';
+      .then(buildUrl => {
+        task.title = `Job added to the queue => ${buildUrl}/${ctx.nextBuildNumber}`;
       })
       .catch(e => {
         return Promise.reject(

@@ -125,21 +125,25 @@ export class JenkinsJob {
     const parameterUrl = this.url + '/buildWithParameters';
 
     if (buildParameters) {
-      return request.post(parameterUrl, {
+      return request
+        .post(parameterUrl, {
+          auth: {
+            user: this.username,
+            pass: this.password
+          },
+          form: buildParameters
+        })
+        .then(() => this.url);
+    }
+
+    return request
+      .post(url, {
         auth: {
           user: this.username,
           pass: this.password
-        },
-        form: buildParameters
-      });
-    }
-
-    return request.post(url, {
-      auth: {
-        user: this.username,
-        pass: this.password
-      }
-    });
+        }
+      })
+      .then(() => this.url);
   }
 
   waitForStatus(jobUrl, pollInterval = DEFAULT_POLL_INTERVAL) {
