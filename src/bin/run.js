@@ -47,6 +47,11 @@ const argv = require('yargs')
       type: 'boolean',
       description: 'No console output, just exit with the status of the job'
     },
+    'print-console': {
+      alias: 'c',
+      type: 'boolean',
+      description: 'Print console output of the job after it completes'
+    },
     verbose: {
       alias: 'v',
       description: 'Print debug information',
@@ -78,8 +83,15 @@ const trigger = new JenkinsTrigger({
 const buildParameters = parseColonSeparatedParams(argv.parameters);
 
 trigger
-  .runJob(buildParameters)
+  .runJob({ buildParameters, silent: argv.silent, verbose: argv.verbose })
   .then(result => {
+    if (argv.printConsole) {
+      console.log(
+        'Build complete, consoleOutput below' +
+          '\n\n________________________\n\n'
+      );
+      console.log(result.consoleText);
+    }
     process.exit(result.exitCode);
   })
   .catch(e => {

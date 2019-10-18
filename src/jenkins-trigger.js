@@ -23,7 +23,7 @@ export class JenkinsTrigger {
     });
   }
 
-  runJob(buildParameters, silent = false, verbose = false) {
+  runJob({ buildParameters, silent = false, verbose = false }) {
     const logLevel = this.getLogLevel(silent, verbose);
 
     const tasks = new listr(
@@ -104,8 +104,8 @@ export class JenkinsTrigger {
   triggerJob(ctx, task) {
     return this.jenkinsJob
       .build(ctx.buildParameters)
-      .then(() => {
-        task.title = 'Job added to the queue';
+      .then(buildUrl => {
+        task.title = `Job added to the queue => ${buildUrl}/${ctx.nextBuildNumber}`;
       })
       .catch(e => {
         return Promise.reject(
@@ -144,11 +144,12 @@ export class JenkinsTrigger {
 
     return this.jenkinsJob
       .waitForStatus(ctx.buildUrl, this.pollInterval)
-      .then(status => {
-        const exitCode = mapBuildResultToStatusCode(status);
-        ctx.buildStatus = status;
+      .then(({ result, consoleText }) => {
+        const exitCode = mapBuildResultToStatusCode(result);
+        ctx.consoleText = consoleText;
+        ctx.buildStatus = result;
         ctx.exitCode = exitCode;
-        task.title = `Build ${status}`;
+        task.title = `Build ${result}`;
         if (exitCode !== 0) {
           return Promise.reject(new Error('Build not successful'));
         }

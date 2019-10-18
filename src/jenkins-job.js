@@ -81,13 +81,16 @@ export class JenkinsJob {
               }
             })
             .then(res => {
-              // Build has actually started when it has a duration
               const data = JSON.parse(res);
-              return data.duration > 0
-                ? build.url
-                : delay(pollInterval).then(() =>
-                    this.waitForBuildToStart(buildNumber)
-                  );
+              return build.url;
+
+              // Bug in jenkins? Newer versions aren't giving duration until job completion
+              // Build has actually started when it has a duration
+              // return data.duration > 0
+              //   ? build.url
+              //   : delay(pollInterval).then(() =>
+              //       this.waitForBuildToStart(buildNumber)
+              //     );
             });
         } else {
           return delay(pollInterval).then(() =>
@@ -125,21 +128,25 @@ export class JenkinsJob {
     const parameterUrl = this.url + '/buildWithParameters';
 
     if (buildParameters) {
-      return request.post(parameterUrl, {
+      return request
+        .post(parameterUrl, {
+          auth: {
+            user: this.username,
+            pass: this.password
+          },
+          form: buildParameters
+        })
+        .then(() => this.url);
+    }
+
+    return request
+      .post(url, {
         auth: {
           user: this.username,
           pass: this.password
-        },
-        form: buildParameters
-      });
-    }
-
-    return request.post(url, {
-      auth: {
-        user: this.username,
-        pass: this.password
-      }
-    });
+        }
+      })
+      .then(() => this.url);
   }
 
   waitForStatus(jobUrl, pollInterval = DEFAULT_POLL_INTERVAL) {
@@ -156,10 +163,23 @@ export class JenkinsJob {
         const data = JSON.parse(res);
         const result = data.result;
         if (result !== null) {
-          return result;
+          return this.getConsoleText(jobUrl).then(consoleText => ({
+            result,
+            consoleText
+          }));
         } else {
           return delay(pollInterval).then(() => this.waitForStatus(jobUrl));
         }
       });
+  }
+
+  getConsoleText(jobUrl) {
+    return request.get(`${jobUrl}consoleText`, {
+      auth: {
+        user: this.username,
+        pass: this.password
+      }
+    });
+    // Don't parse, result is plaintext
   }
 }

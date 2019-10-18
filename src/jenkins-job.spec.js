@@ -445,8 +445,12 @@ describe('JenkinsJob', () => {
           result: 'SUCCESS'
         });
 
+      nock('https://ci.mycompany.com')
+        .get('/topLevel/myProject/21/consoleText')
+        .reply(200, 'some output');
+
       return instance.waitForStatus(buildUrl).then(res => {
-        expect(res).toEqual('SUCCESS');
+        expect(res.result).toEqual('SUCCESS');
       });
     });
     describe('error', () => {
