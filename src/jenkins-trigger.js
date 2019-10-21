@@ -1,5 +1,6 @@
 import 'core-js/stable';
 import listr from 'listr';
+import isCi from 'is-ci';
 import { mapBuildResultToStatusCode } from './status-code-map';
 import { JenkinsJob } from './jenkins-job';
 
@@ -58,7 +59,7 @@ export class JenkinsTrigger {
       }
     );
 
-    return tasks.run({ buildParameters });
+    return tasks.run({ buildParameters, isCi });
   }
 
   getLogLevel(silent, verbose) {
@@ -114,7 +115,10 @@ export class JenkinsTrigger {
   }
 
   getBuildUrl(ctx, task) {
-    const intervalId = this.waitTimer(task);
+    let intervalId;
+    if (ctx.isCi) {
+      intervalId = this.waitTimer(task);
+    }
 
     return this.jenkinsJob
       .waitForBuildToStart(ctx.nextBulidNumber, this.pollInterval)
@@ -132,12 +136,15 @@ export class JenkinsTrigger {
         );
       })
       .finally(() => {
-        clearInterval(intervalId);
+        intervalId && clearInterval(intervalId);
       });
   }
 
   getBuildStatus(ctx, task) {
-    const intervalId = this.waitTimer(task);
+    let intervalId;
+    if (ctx.isCi) {
+      intervalId = this.waitTimer(task);
+    }
 
     return this.jenkinsJob
       .waitForStatus(ctx.buildUrl, this.pollInterval)
@@ -159,7 +166,7 @@ export class JenkinsTrigger {
         );
       })
       .finally(() => {
-        clearInterval(intervalId);
+        intervalId && clearInterval(intervalId);
       });
   }
 

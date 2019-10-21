@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import 'core-js/stable';
+import isCi from 'is-ci';
 
 import { JenkinsTrigger } from '../jenkins-trigger';
 import { parseColonSeparatedParams } from '../parse-param-array';
@@ -55,7 +56,8 @@ const argv = require('yargs')
     verbose: {
       alias: 'v',
       description: 'Print debug information',
-      normalize: true
+      normalize: true,
+      default: isCi
     }
   })
   .alias('h', 'help')
@@ -81,6 +83,10 @@ const trigger = new JenkinsTrigger({
 });
 
 const buildParameters = parseColonSeparatedParams(argv.parameters);
+
+if (isCi) {
+  console.log('CI environment detected');
+}
 
 trigger
   .runJob({ buildParameters, silent: argv.silent, verbose: argv.verbose })
