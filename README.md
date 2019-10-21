@@ -116,6 +116,10 @@ jenkinsJob
   });
 ```
 
+## CI Integration
+
+When `jenkins-wait` is run from a CI environment (TravisCI, CircleCI, Jenkins, etc.) The running seconds count will not be printed to the console. When the CLI is used, it will also be run in verbose mode by default.
+
 ### Development
 
 #### Setup
