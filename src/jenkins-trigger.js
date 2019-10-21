@@ -89,7 +89,7 @@ export class JenkinsTrigger {
     return this.jenkinsJob
       .getNextBuildNumber()
       .then(nextBuildNumber => {
-        ctx.nextBulidNumber = nextBuildNumber;
+        ctx.nextBuildNumber = nextBuildNumber;
         task.title = `Next build number will be ${nextBuildNumber}`;
       })
       .catch(e => {
