@@ -56,7 +56,7 @@ const argv = require('yargs')
     verbose: {
       alias: 'v',
       description: 'Print debug information',
-      normalize: true,
+      type: 'boolean',
       default: isCi
     }
   })
