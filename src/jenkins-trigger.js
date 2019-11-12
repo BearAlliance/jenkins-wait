@@ -121,7 +121,7 @@ export class JenkinsTrigger {
     }
 
     return this.jenkinsJob
-      .waitForBuildToStart(ctx.nextBulidNumber, this.pollInterval)
+      .waitForBuildToStart(ctx.nextBuildNumber, this.pollInterval)
       .then(url => {
         ctx.buildUrl = url;
         task.title = 'Build started';
