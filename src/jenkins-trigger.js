@@ -116,7 +116,7 @@ export class JenkinsTrigger {
 
   getBuildUrl(ctx, task) {
     let intervalId;
-    if (ctx.isCi) {
+    if (!ctx.isCi) {
       intervalId = this.waitTimer(task);
     }
 
@@ -142,7 +142,7 @@ export class JenkinsTrigger {
 
   getBuildStatus(ctx, task) {
     let intervalId;
-    if (ctx.isCi) {
+    if (!ctx.isCi) {
       intervalId = this.waitTimer(task);
     }
 
